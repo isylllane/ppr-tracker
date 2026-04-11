@@ -1,7 +1,25 @@
-node_modules/
-.env
-.env.*
-src/uploads/
+# Зависимости
+**/node_modules/
+
+# Переменные окружения
+**/.env
+**/.env.local
+
+# Загруженные файлы
+Backend/src/uploads/
+
+# Логи
 *.log
-.DS_Store
+
+# IDE
+.vscode/
 .idea/
+
+# Файлы сборки
+**/dist/
+**/build/
+
+# Пароли
+
+password.txt
+/*.txt
