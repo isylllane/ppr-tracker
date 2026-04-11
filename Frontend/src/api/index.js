@@ -1,12 +1,20 @@
 import axios from 'axios'
 
+
+const getBaseUrl = () => {
+
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        return `http://${window.location.hostname}:5000/api`
+    }
+    return '/api'
+}
+
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: getBaseUrl(),
     headers: {
         'Content-Type': 'application/json'
     }
 })
-
 // Добавляем токен в каждый запрос
 api.interceptors.request.use(
     (config) => {

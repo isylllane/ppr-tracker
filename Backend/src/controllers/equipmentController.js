@@ -69,4 +69,34 @@ const deleteEquipmentHandler = async (req, res) => {
     }
 };
 
-module.exports = { listEquipment, getEquipmentFull, getEquipmentByQrCode, createEquipmentHandler, updateEquipmentHandler, deleteEquipmentHandler };
+const QRCode = require('qrcode')
+
+const generateQrCode = async (req, res) => {
+    try {
+        const { id } = req.params
+        const equipment = await getEquipmentById(id)
+        if (!equipment) {
+            return res.status(404).json({ message: 'Equipment not found' })
+        }
+
+        // Формируем URL для перехода после сканирования
+        // Для локальной разработки
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000'
+        const url = `${frontendUrl}/equipment/qr/${equipment.qr_code}`
+
+        // Генерируем QR-код как PNG
+        const qrBuffer = await QRCode.toBuffer(url, {
+            type: 'png',
+            margin: 2,
+            width: 300
+        })
+
+        res.setHeader('Content-Type', 'image/png')
+        res.setHeader('Content-Disposition', `attachment; filename="qr-${equipment.qr_code}.png"`)
+        res.send(qrBuffer)
+    } catch (err) {
+        console.error('QR generation error:', err)
+        res.status(500).json({ message: err.message })
+    }
+}
+module.exports = { listEquipment, getEquipmentFull, getEquipmentByQrCode, createEquipmentHandler, updateEquipmentHandler, deleteEquipmentHandler, generateQrCode };

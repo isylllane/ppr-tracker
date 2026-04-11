@@ -7,7 +7,13 @@ import '@mdi/font/css/materialdesignicons.css'
 export default createVuetify({
     components,
     directives,
+    // Подключить русский язык
+    locale: {
+        current: 'ru',
+        locale: 'ru',
+    },
     theme: {
-        defaultTheme: 'light'
+        defaultTheme: 'dark'
     }
+
 })
