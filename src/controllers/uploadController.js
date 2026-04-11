@@ -30,6 +30,7 @@ const uploadFile = async (req, res) => {
         );
         res.status(201).json(attachment);
     } catch (err) {
+        console.error('Upload error details:', err);
         res.status(500).json({ message: err.message });
     }
 };
