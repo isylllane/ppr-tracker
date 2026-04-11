@@ -20,6 +20,5 @@ Backend/src/uploads/
 **/build/
 
 # Пароли
-
 password.txt
 /*.txt
